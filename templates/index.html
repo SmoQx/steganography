@@ -16,6 +16,9 @@
         <br>
         <input type="submit" value="Upload">
     </form>
+    {% if filename %}
+    <p>File successfully uploaded and encrypted. <a href="{{ url_for('download_file', file_name=filename) }}">{{ filename }}</a></p>
+    {% endif %}
     <script>
         const fileInput = document.getElementById('fileInput');
 
