@@ -23,12 +23,9 @@ def binary_to_text(binary_data):
     return text
 
 if __name__ == "__main__":
-    image_path = "path/to/output/image_with_hidden_text.png"
-    
+    image_path = "downloads/with_text.png" 
+
     extracted_text = extract_text_from_image(image_path)
 
     print("Extracted Text:", extracted_text)
 
-
-if __name__ == '__main__':
-    pass
