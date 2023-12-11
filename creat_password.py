@@ -1,4 +1,5 @@
-from numpy import random
+import numpy as np
+import random
 
 
 def caesar_cipher(text, shift):
