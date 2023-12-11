@@ -9,11 +9,9 @@ def caesar_cipher(text, shift):
             # Encrypt uppercase letters
             if char.isupper():
                 result += chr((ord(char) + shift - 65) % 26 + 65)
-                print(result)
             # Encrypt lowercase letters
             else:
                 result += chr((ord(char) + shift - 97) % 26 + 97)
-                print(result)
         else:
             result += char
     return result
@@ -34,19 +32,28 @@ def encrypt_text(file_path, shift):
         print(f"An error occurred: {str(e)}")
 
 
-    def create_salt():
-        pass
+def create_salt():
+    pass
+
+
+def reversed_caesar(text, shift = 10):
+    return caesar_cipher(text, -shift)
+
 
 
 if __name__ == '__main__':
     pass_with_salt = ""
-    password = "pass"
+    password = "Pa55"
     if len(password) < 33 and len(password) > 1:
         for _ in range(len(password), 33):
-            rand = random.randint(65, 123)
+            rand = random.randint(1, 123)
+            if rand == 32 or rand == 10 or rand == 9:
+                rand += 1
             rand_character = chr(rand)
             password += rand_character
             print(password)
 
-    print(caesar_cipher(pass_with_salt, 10))
+    print(tekst := caesar_cipher(password, 10))
+    print(reversed_caesar(tekst, 20))
+    print(ord('\n'))
 
