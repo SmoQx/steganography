@@ -1,4 +1,3 @@
-
 from numpy import random
 
 
@@ -47,4 +46,6 @@ if __name__ == '__main__':
             rand_character = chr(rand)
             password += rand_character
             print(password)
+
     print(caesar_cipher(pass_with_salt, 10))
+
