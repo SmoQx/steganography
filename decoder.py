@@ -46,4 +46,3 @@ if __name__ == "__main__":
     tekst_to_display = caesar_cipher(extracted_text, -10)
 
     print("Extracted Text:", tekst_to_display[:50])
-
