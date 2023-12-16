@@ -67,6 +67,7 @@ def file_encoder(file_name: pathlib.Path, text_to_be_encrypted: str, password: s
     text_to_encrypt = text_to_be_encrypted
     pasword_shift = gen_shift(password)
 
+    print(password, pasword_shift)
     print(text_to_encrypt)
 
     encrypted_message = caesar_cipher(text_to_encrypt, pasword_shift)

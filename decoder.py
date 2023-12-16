@@ -1,4 +1,5 @@
 from PIL import Image
+from creat_password import gen_shift
 
 
 def extract_text_from_image(image_path):
@@ -40,9 +41,9 @@ def caesar_cipher(text, shift):
 
 
 if __name__ == "__main__":
-    image_path = "downloads/with_text.png" 
+    image_path = "./downloads/output.png"
 
     extracted_text = extract_text_from_image(image_path)
-    tekst_to_display = caesar_cipher(extracted_text, -10)
+    tekst_to_display = caesar_cipher(extracted_text, -(gen_shift("tekst")))
 
     print("Extracted Text:", tekst_to_display[:50])

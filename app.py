@@ -28,7 +28,6 @@ def upload_file():
     password = request.form.get('password')
     text_to_encrypt = request.form.get('text')
 
-
     if 'file' not in request.files:
         return redirect(request.url)
 
