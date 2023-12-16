@@ -32,7 +32,7 @@ def encrypt_text(file_path, shift):
         print(f"An error occurred: {str(e)}")
 
 
-def reversed_caesar(text, shift = 10):
+def reversed_caesar(text, shift=10):
     return caesar_cipher(text, -shift)
 
 
@@ -50,4 +50,3 @@ if __name__ == '__main__':
     print(tekst := caesar_cipher(password, gen_shift(password)))
     print(reversed_caesar(tekst, gen_shift(password)))
     print(ord('\n'))
-

@@ -47,7 +47,7 @@ def upload_file():
 
 @app.route('/download/<file_name>')
 def download_file(file_name):
-    print("kurwaaa!!!")
+    print("tekst")
     encrypted_file_path = safe_join(app.config['UPLOAD_FOLDER'], file_name)
     print(file_name)
     # Ensure the file exists before attempting to send it

@@ -74,12 +74,9 @@ def file_encoder(file_name: pathlib.Path, password: str = "tekst"):
 
 if __name__ == "__main__":
     image_path = "downloads/Simple_light_bulb_graphic.jpg"
-    image_path2 =  "downloads/lovepik-simple-picture_500447536.jpg"
+    image_path2 = "downloads/lovepik-simple-picture_500447536.jpg"
     text_to_hide = "Hello, this is a hidden message!"
     hidden_text = caesar_cipher(text_to_hide, 10)
     output_path = "downloads/with_text.png"
 
     hide_text_in_image(image_path2, hidden_text, output_path)
-
-
-
