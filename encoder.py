@@ -1,7 +1,6 @@
-import numpy as np
-import os
 import pathlib
 from PIL import Image
+from creat_password import gen_shift
 
 
 def caesar_cipher(text, shift):
@@ -64,12 +63,17 @@ def hide_text_in_image(image_path, text_to_hide, output_path):
     img.save(output_path)
 
 
-def file_encoder(file_name: pathlib.Path, password: str = "tekst"):
-    if password == "tekst":
-        with open(file_name) as file_to_encode:
-            file = file_to_encode.read()
-        np_loaded = np.loadtxt(file_name)
-    return pathlib.Path("dane13.txt")
+def file_encoder(file_name: pathlib.Path, text_to_be_encrypted: str, password: str = "tekst"):
+    text_to_encrypt = text_to_be_encrypted
+    pasword_shift = gen_shift(password)
+
+    print(text_to_encrypt)
+
+    encrypted_message = caesar_cipher(text_to_encrypt, pasword_shift)
+    hide_text_in_image(file_name, encrypted_message, output_path=pathlib.Path("./downloads/output.png"))
+    print(encrypted_message)
+
+    return file_name
 
 
 if __name__ == "__main__":

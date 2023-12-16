@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Hello Flask</title>
+    <style>
+        body {
+            background-color: #333333
+        }
+    </style>
 </head>
 <body>
     <h1>Hello</h1>
     <p>Enter the password to upload a file:</p>
     <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
         <input type="password" name="password" placeholder="Password" required>
+        <input type="file" name="file" id="fileInput" > <!--multiple required-->
         <br>
-        <input type="file" name="file" id="fileInput" multiple required>
+        <input type="text" name="text" id="text_to_encrypt" width="100px" height="200px">
         <br>
         <input type="submit" value="Upload">
     </form>

@@ -1,8 +1,8 @@
 import pathlib
-from flask import Flask, render_template, request, redirect, url_for, send_file, safe_join
+from werkzeug.utils import safe_join
+from flask import Flask, render_template, request, redirect, url_for, send_file
 import os
 from encoder import file_encoder
-from pathlib import Path
 
 
 app = Flask(__name__)
@@ -26,6 +26,8 @@ def hello():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     password = request.form.get('password')
+    text_to_encrypt = request.form.get('text')
+
 
     if 'file' not in request.files:
         return redirect(request.url)
@@ -40,7 +42,7 @@ def upload_file():
         file.save(filename)
 
         # Encrypt the uploaded file
-        encrypted_file_path = file_encoder(filename)
+        encrypted_file_path = file_encoder(pathlib.Path(filename), text_to_encrypt)
 
         return render_template('index.html', filename=encrypted_file_path, password=password)
 
