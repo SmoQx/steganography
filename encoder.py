@@ -23,7 +23,7 @@ def reversed_caesar(text, shift = 10):
 
 
 def text_to_binary(text):
-    binary_data = ''.join(format(ord(char), '08b') for char in text)
+    binary_data = ''.join(format(ord(char), '08b') for char in text) + format(0, '08b')
     return binary_data
 
 
@@ -38,8 +38,7 @@ def hide_text_in_image(image_path, text_to_hide, output_path):
 
     # Convert text to binary
     binary_text = text_to_binary(text_to_hide)
-    print(text_to_hide)
-    print(binary_text)
+
     data_index = 0
 
     # Iterate through each pixel of the image
@@ -63,7 +62,7 @@ def hide_text_in_image(image_path, text_to_hide, output_path):
     img.save(output_path)
 
 
-def file_encoder(file_name: pathlib.Path, text_to_be_encrypted: str, password: str = "tekst"):
+def file_encoder(file_name: pathlib.Path, text_to_be_encrypted: str, password: str):
     text_to_encrypt = text_to_be_encrypted
     pasword_shift = gen_shift(password)
 
@@ -79,9 +78,8 @@ def file_encoder(file_name: pathlib.Path, text_to_be_encrypted: str, password: s
 
 if __name__ == "__main__":
     image_path = "downloads/Simple_light_bulb_graphic.jpg"
-    image_path2 = "downloads/lovepik-simple-picture_500447536.jpg"
-    text_to_hide = "Hello, this is a hidden message!"
+    image_path2 = "downloads/thumbnail.jpeg"
+    text_to_hide = "Hello, this is a hidden message! 00 25"
     hidden_text = caesar_cipher(text_to_hide, 10)
     output_path = "downloads/with_text.png"
-
-    hide_text_in_image(image_path2, hidden_text, output_path)
+    file_encoder(pathlib.Path(image_path2), text_to_hide)

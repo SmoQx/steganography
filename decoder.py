@@ -21,7 +21,12 @@ def extract_text_from_image(image_path):
 
 
 def binary_to_text(binary_data):
-    text = ''.join(chr(int(binary_data[i:i+8], 2)) for i in range(0, len(binary_data), 8))
+    text = ''
+    for i in range(0, len(binary_data), 8):
+        byte = binary_data[i:i+8]
+        if byte == '00000000':
+            break  # Stop decoding when encountering '00000000'
+        text += chr(int(byte, 2))
     return text
 
 
@@ -40,10 +45,18 @@ def caesar_cipher(text, shift):
     return result
 
 
+def decode_file(file_path, password):
+    extracted_text = extract_text_from_image(file_path)
+    tekst_to_display = caesar_cipher(extracted_text, -(gen_shift(password)))
+    print("Extracted Text:", tekst_to_display)
+
+    return tekst_to_display
+
+
 if __name__ == "__main__":
     image_path = "./downloads/output.png"
 
-    extracted_text = extract_text_from_image(image_path)
-    tekst_to_display = caesar_cipher(extracted_text, -(gen_shift("tekst")))
+    extracted_text = extract_text_from_image(file_path)
+    tekst_to_display = caesar_cipher(extracted_text, -(gen_shift('tekst')))
+    print("Extracted Text:", tekst_to_display)
 
-    print("Extracted Text:", tekst_to_display[:50])

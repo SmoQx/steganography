@@ -1,67 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
 
-    <title>Steg</title>
-    <style>
-        body {
-            background-color: #333333
-        }
-    </style>
-</head>
-<body>
-    <p>Enter the password to upload a file:</p>
-    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
-        <button type="button" onclick="setAction('encode')">Encode</button>
-        <button type="button" onclick="setAction('decode')">Decode</button>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <title>Steg</title>
+    </head>
+    <body>
 
+        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+            <fieldset>
+            <legend>Enter the password to upload a file:</legend>
+
+            <div>
+                <input type="radio" id="encode" name="upload-action" value="encode" checked />
+                <label for="encode">Encode</label>
+            </div>
+
+            <div>
+                <input type="radio" id="decode" name="upload-action" value="decode" />
+                <label for="decode">Decode</label>
+            </div>
+
+            <div class="row">
+                <label for="password">Passowrd:</label>
+                <input type="password" id="password" name="password"/>
+            </div>
+
+            <div class="row">
+                <label for="fileInput">File input:</label>
+                <input type="file" id="fileInput" name="fileInput" />
+
+                <label for="text_to_encrypt">Text to encrypt:</label>
+                <input type="text" id="text_to_encrypt" name="text_to_encrypt" />
+            </div>
+
+            <div>
+                <input type="submit" value="Upload" />
+            </div>
+            <script>
+                function setAction(action) {
+                    document.getElementById('action').value = action;
+                }
+
+                function handleFileSelect(files) {
+                    // Handle the selected files as needed
+                    console.log('Selected files:', files);
+                }
+            </script>
+            </fieldset>
+        </form>
+        {% if fileInput %}
+        <p>File successfully uploaded and encrypted. <a href="{{ url_for('download_file', file_name=fileInput) }}">{{ fileInput }}</a></p>
+        {% endif %}
         <script>
-            function setAction(action) {
-                document.getElementById('action').value = action;
-            }
+            const fileInput = document.getElementById('fileInput');
+            const encode = document.getElementById('encode');
+            const decode = document.getElementById('decode');
+
+            fileInput.addEventListener('click', handleFileSelect);
+
+            fileInput.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.dataTransfer.dropEffect = 'copy';
+            });
+
+            fileInput.addEventListener('drop', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const files = e.dataTransfer.files;
+                handleFileSelect(files);
+            });
 
             function handleFileSelect(files) {
                 // Handle the selected files as needed
                 console.log('Selected files:', files);
             }
         </script>
-        <br>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="file" name="file" id="fileInput" > <!--multiple required-->
-        <br>
-        <input type="text" name="text" id="text_to_encrypt" width="100px" height="200px">
-        <br>
-        <input type="submit" value="Upload">
-    </form>
-    {% if filename %}
-    <p>File successfully uploaded and encrypted. <a href="{{ url_for('download_file', file_name=filename) }}">{{ filename }}</a></p>
-    {% endif %}
-    <script>
-        const fileInput = document.getElementById('fileInput');
-
-        fileInput.addEventListener('change', handleFileSelect);
-
-        fileInput.addEventListener('dragover', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.dataTransfer.dropEffect = 'copy';
-        });
-
-        fileInput.addEventListener('drop', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const files = e.dataTransfer.files;
-            handleFileSelect(files);
-        });
-
-        function handleFileSelect(files) {
-            // Handle the selected files as needed
-            console.log('Selected files:', files);
-        }
-    </script>
-</body>
+    </body>
 </html>

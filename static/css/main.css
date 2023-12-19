@@ -1,0 +1,48 @@
+fieldset {
+  font-family: Segoe UI;
+  letter-spacing: .01em;
+
+  div {
+    padding: 8px 0;
+  }
+
+  legend {
+    padding: 3px 6px;
+  }
+
+  input[type="text"], input[type="password"] {
+      padding: 0.5em 0.6em;
+      vertical-align: middle;
+      font-size: 100%;
+      line-height: 1.15;
+      margin: 0;
+  }
+
+  input[type="radio"]:checked + label {
+    color: #0078e7;
+    font-weight: 700;
+  }
+
+  input[type="submit"] {
+    background-color: #0078e7;
+    color: #fff;
+    font-size: 100%;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+
+fieldset, fieldset legend, input[type="text"], input[type="password"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 200px;
+}
