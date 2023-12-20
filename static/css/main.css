@@ -1,4 +1,5 @@
 fieldset {
+  background-color: #555555;
   font-family: Segoe UI;
   letter-spacing: .01em;
 
@@ -45,4 +46,16 @@ fieldset, fieldset legend, input[type="text"], input[type="password"] {
   flex-direction: column;
   gap: 5px;
   width: 200px;
+}
+legend {
+    background-color: #4caf50;
+    color: #000000;
+
+}
+body {
+    background-image: url("steg_bg.jpg");
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

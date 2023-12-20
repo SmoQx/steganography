@@ -66,12 +66,8 @@ def file_encoder(file_name: pathlib.Path, text_to_be_encrypted: str, password: s
     text_to_encrypt = text_to_be_encrypted
     pasword_shift = gen_shift(password)
 
-    print(password, pasword_shift)
-    print(text_to_encrypt)
-
     encrypted_message = caesar_cipher(text_to_encrypt, pasword_shift)
-    hide_text_in_image(file_name, encrypted_message, output_path=pathlib.Path("./downloads/output.png"))
-    print(encrypted_message)
+    hide_text_in_image(file_name, encrypted_message, output_path=file_name)
 
     return file_name
 

@@ -53,12 +53,35 @@
             </fieldset>
         </form>
         {% if fileInput %}
-        <p>File successfully uploaded and encrypted. <a href="{{ url_for('download_file', file_name=fileInput) }}">{{ fileInput }}</a></p>
+            <!-- Add a download link/button -->
+            <a href="{{ url_for('download_file', filename=fileInput ) }}" download>Download Encrypted File</a>
         {% endif %}
         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get references to the radio buttons and text input
+
+                const encode = document.getElementById('encode');
+                const decode = document.getElementById('decode');
+                const textInput = document.getElementById('text_to_encrypt');
+
+                // Add an event listener to the radio buttons
+                encode.addEventListener('change', function () {
+                    // If "Show Input" is selected, show the text input
+                    if (encode.checked) {
+                        textInput.style.display = 'block';
+                    }
+                });
+
+                decode.addEventListener('change', function () {
+                    // If "Hide Input" is selected, hide the text input
+                    if (decode.checked) {
+                        textInput.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+        <script>
             const fileInput = document.getElementById('fileInput');
-            const encode = document.getElementById('encode');
-            const decode = document.getElementById('decode');
 
             fileInput.addEventListener('click', handleFileSelect);
 
