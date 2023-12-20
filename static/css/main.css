@@ -47,6 +47,7 @@ fieldset, fieldset legend, input[type="text"], input[type="password"] {
   gap: 5px;
   width: 200px;
 }
+
 legend {
     background-color: #4caf50;
     color: #000000;
@@ -54,7 +55,10 @@ legend {
 }
 body {
     background-image: url("steg_bg.jpg");
+    background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;

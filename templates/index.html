@@ -32,8 +32,9 @@
             <div class="row">
                 <label for="fileInput">File input:</label>
                 <input type="file" id="fileInput" name="fileInput" />
-
-                <label for="text_to_encrypt">Text to encrypt:</label>
+            </div>
+            <div class="row">
+                <label for="text_to_encrypt" id="text_block">Text to encrypt:</label>
                 <input type="text" id="text_to_encrypt" name="text_to_encrypt" />
             </div>
 
@@ -51,11 +52,17 @@
                 }
             </script>
             </fieldset>
+            {% if fileInput %}
+            <a  href="{{ url_for('download_file', filename=fileInput ) }}" download>
+                <fieldset>
+                    <div class="row">
+                        <!-- Add a download link/button -->
+                        Download Encrypted File
+                    </div>
+                </fieldset>
+            </a>
+            {% endif %}
         </form>
-        {% if fileInput %}
-            <!-- Add a download link/button -->
-            <a href="{{ url_for('download_file', filename=fileInput ) }}" download>Download Encrypted File</a>
-        {% endif %}
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 // Get references to the radio buttons and text input
@@ -63,12 +70,14 @@
                 const encode = document.getElementById('encode');
                 const decode = document.getElementById('decode');
                 const textInput = document.getElementById('text_to_encrypt');
+                const text_block = document.getElementById('text_block');
 
                 // Add an event listener to the radio buttons
                 encode.addEventListener('change', function () {
                     // If "Show Input" is selected, show the text input
                     if (encode.checked) {
                         textInput.style.display = 'block';
+                        text_block.style.display = 'block';
                     }
                 });
 
@@ -76,6 +85,7 @@
                     // If "Hide Input" is selected, hide the text input
                     if (decode.checked) {
                         textInput.style.display = 'none';
+                        text_block.style.display = 'none';
                     }
                 });
             });
