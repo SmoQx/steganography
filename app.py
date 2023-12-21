@@ -12,7 +12,7 @@ UPLOAD_FOLDER = 'downloads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['static_url_path'] = '/static'
 app.config['static_folder'] = 'static'
-app.config['ALLOWED_EXTENSIONS'] = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 PASSWORD = 'your_password'  # Change this to your desired password
 
 
