@@ -1,0 +1,280 @@
+# Caesar Cipher Image Encoder
+
+## Introduction
+
+This Python script provides functionality for encoding text messages using the Caesar cipher algorithm and hiding the encrypted message within images.
+
+## Dependencies
+
+- `os`: Standard library module for interacting with the operating system.
+- `pathlib`: Standard library module for working with file paths.
+- `PIL` (Pillow): Python Imaging Library fork, used for image processing.
+- `creat_password`: External module providing a function (`gen_shift`) to generate a Caesar cipher shift based on a password.
+
+## Functions
+
+### `caesar_cipher(text, shift)`
+
+Encrypts a given text using the Caesar cipher algorithm with the specified shift.
+
+- Parameters:
+  - `text`: The text to be encrypted.
+  - `shift`: The shift value for the Caesar cipher.
+
+- Returns:
+  - Encrypted text.
+
+### `reversed_caesar(text, shift=10)`
+
+Decrypts a text encrypted with the Caesar cipher.
+
+- Parameters:
+  - `text`: The text to be decrypted.
+  - `shift`: The shift value for the Caesar cipher. Defaults to 10.
+
+- Returns:
+  - Decrypted text.
+
+### `text_to_binary(text)`
+
+Converts text to binary representation, appending a marker (byte of all zeros) to indicate the end of the text.
+
+- Parameters:
+  - `text`: The text to be converted.
+
+- Returns:
+  - Binary representation of the text.
+
+### `binary_to_text(binary_data)`
+
+Converts binary data back to text.
+
+- Parameters:
+  - `binary_data`: Binary data to be converted.
+
+- Returns:
+  - Decrypted text.
+
+### `hide_text_in_image(image_path, text_to_hide, output_path)`
+
+Hides a binary message within an image using the least significant bit of each color channel.
+
+- Parameters:
+  - `image_path`: Path to the input image.
+  - `text_to_hide`: Text to be hidden.
+  - `output_path`: Path to save the modified image.
+
+### `file_encoder(file_name, text_to_be_encrypted, password)`
+
+Encrypts a text message, hides it in an image, and saves the modified image.
+
+- Parameters:
+  - `file_name`: Path to the input image file.
+  - `text_to_be_encrypted`: Text to be encrypted and hidden.
+  - `password`: Password for generating the Caesar cipher shift.
+
+- Returns:
+  - Path to the saved modified image.
+
+## Usage
+
+The script can be used as a standalone application or imported as a module.
+
+Example:
+```python
+if __name__ == "__main__":
+    image_path = "downloads/asdf.jpg"
+    text_to_hide = "Jebac "
+    file_encoder(pathlib.Path(image_path), text_to_hide, password="pass")
+
+
+# Caesar Cipher Image Decoder
+
+## Introduction
+
+This Python script provides functionality for decoding text messages hidden within images using the Caesar cipher algorithm.
+
+## Dependencies
+
+- `PIL` (Pillow): Python Imaging Library fork, used for image processing.
+- `creat_password`: External module providing a function (`gen_shift`) to generate a Caesar cipher shift based on a password.
+
+## Functions
+
+### `extract_text_from_image(image_path)`
+
+Extracts a binary message hidden within an image by retrieving the least significant bit from each color channel of each pixel.
+
+- Parameters:
+  - `image_path`: Path to the image to be decoded.
+
+- Returns:
+  - Extracted binary message.
+
+### `binary_to_text(binary_data)`
+
+Converts binary data back to text, stopping decoding when encountering a marker (byte of all zeros).
+
+- Parameters:
+  - `binary_data`: Binary data to be converted.
+
+- Returns:
+  - Decoded text.
+
+### `caesar_cipher(text, shift)`
+
+Decrypts a given text using the Caesar cipher algorithm with the specified shift.
+
+- Parameters:
+  - `text`: The text to be decrypted.
+  - `shift`: The shift value for the Caesar cipher.
+
+- Returns:
+  - Decrypted text.
+
+### `decode_file(file_path, password)`
+
+Decodes a text message hidden within an image file using the Caesar cipher.
+
+- Parameters:
+  - `file_path`: Path to the image file to be decoded.
+  - `password`: Password for generating the Caesar cipher shift.
+
+- Returns:
+Module: caesar_cipher
+
+caesar_cipher(text: str, shift: int) -> str
+    Encrypts or decrypts the given text using the Caesar cipher with the specified shift.
+
+    Parameters:
+        - text (str): The input text to be encrypted or decrypted.
+        - shift (int): The number of positions to shift the characters in the alphabet.
+
+    Returns:
+        - str: The result of the encryption or decryption.
+
+encrypt_text(file_path: str, shift: int) -> None
+    Encrypts the text in a file using the Caesar cipher and writes the result back to the same file.
+
+    Parameters:
+        - file_path (str): The path to the file containing the text to be encrypted.
+        - shift (int): The number of positions to shift the characters in the alphabet.
+
+    Prints:
+        - "Encryption successful." upon successful encryption.
+        - An error message if an exception occurs during the encryption process.
+
+reversed_caesar(text: str, shift: int = 10) -> str
+    Decrypts the given text using the Caesar cipher with the specified shift (default is 10).
+
+    Parameters:
+        - text (str): The input text to be decrypted.
+        - shift (int): The number of positions to shift the characters in the alphabet.
+
+    Returns:
+        - str: The result of the decryption.
+
+gen_shift(password: str) -> int
+    Generates a shift value based on the ASCII values of characters in the given password.
+
+    Parameters:
+        - password (str): The password for which the shift value is generated.
+
+    Returns:
+        - int: The calculated shift value.
+
+__main__
+    A block that runs when the script is executed directly.
+
+    Variables:
+        - pass_with_salt (str): Unused variable.
+        - password (str): A sample password for testing purposes.
+
+    Actions:
+        - Prints the result of encrypting the sample password.
+        - Prints the result of decrypting the previously encrypted password.
+        - Prints the ASCII value of the newline character.
+  - Decoded text.
+
+## Usage
+
+The script can be used as a standalone application or imported as a module.
+
+Example:
+```python
+if __name__ == "__main__":
+    image_path = "downloads/output.png"
+    file_path = "./downloads/pobrane.jpeg"
+    password = "pass"
+    
+    extracted_text = extract_text_from_image(image_path)
+    decoded_text = caesar_cipher(extracted_text, -(gen_shift(password)))
+    
+    print("Extracted Text:", decoded_text)
+
+Module: Flask_File_Uploader
+
+A simple Flask web application for uploading, encrypting, and decrypting files.
+
+Dependencies:
+    - Flask
+    - pathlib
+    - werkzeug
+
+Functions and Routes:
+
+1. `allowed_file(filename: str) -> bool`
+   - Checks if the file extension is allowed.
+   - Parameters:
+     - filename (str): The name of the file.
+   - Returns:
+     - bool: True if the file extension is allowed, False otherwise.
+
+2. `main()`
+   - Renders the main page.
+   - Routes:
+     - '/'
+
+3. `upload_file()`
+   - Handles file uploads, encryption, and decryption.
+   - Routes:
+     - '/upload' (POST)
+   - Parameters (from the form):
+     - password (str): Password for encryption or decryption.
+     - text_to_encrypt (str): Text to be encrypted.
+     - upload-action (str): Action flag for encoding or decoding.
+     - fileInput (file): File to be uploaded.
+   - Returns:
+     - Rendered templates for different scenarios.
+
+4. `download_file(filename: str)`
+   - Handles file downloads and removes the file after sending.
+   - Routes:
+     - '/download/<filename>'
+   - Parameters:
+     - filename (str): The name of the file to be downloaded.
+   - Returns:
+     - File download response or rendered templates.
+
+5. `remove_file(response: Flask.Response) -> Flask.Response`
+   - Removes the file after the response is sent.
+   - Parameters:
+     - response (Flask.Response): The Flask response object.
+   - Returns:
+     - Flask.Response: The modified response.
+
+6. `__main__`
+   - Executes when the script is run directly.
+   - Sets up the Flask app and runs it.
+
+App Configuration:
+   - UPLOAD_FOLDER: 'downloads'
+   - Static files served from '/static'
+   - Allowed file extensions: {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+   - Default password: 'your_password'
+
+Notes:
+   - File uploads are encrypted using a Caesar cipher.
+   - Decryption is performed upon file download.
+   - Temporary files are removed after download or upon errors.
+   - The application runs in debug mode when executed directly.
