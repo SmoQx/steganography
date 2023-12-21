@@ -2,9 +2,6 @@
     <h1>Simple Web Steganograph</h1>
 </div>
 
-<div align="center">
-    <h3>Pastel Theme</h3>
-</div>
 
 ![](/screenshots/...)
 
