@@ -1,5 +1,3 @@
-import numpy as np
-import random
 
 
 def caesar_cipher(text, shift):
@@ -50,3 +48,4 @@ if __name__ == '__main__':
     print(tekst := caesar_cipher(password, gen_shift(password)))
     print(reversed_caesar(tekst, gen_shift(password)))
     print(ord('\n'))
+
