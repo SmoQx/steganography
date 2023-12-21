@@ -1,6 +1,6 @@
 import pathlib
 from werkzeug.security import safe_join
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, render_template, request, redirect, url_for, send_file, after_this_request
 import os
 from encoder import file_encoder
 from decoder import decode_file
@@ -31,8 +31,6 @@ def upload_file():
     password = request.form.get('password')
     text_to_encrypt = request.form.get('text_to_encrypt')
     encode_flag = request.form.get('upload-action')
-    if encode_flag == "encode":
-        print("Jebać pis")
 
     if 'fileInput' not in request.files:
         return redirect(request.url)
@@ -45,15 +43,23 @@ def upload_file():
     if file and encode_flag == "encode":
         filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filename)
-
+        print(text_to_encrypt)
         # Encrypt the uploaded file
         encrypted_file_path = file_encoder(pathlib.Path(filename), text_to_encrypt, password)
         print(pathlib.Path(encrypted_file_path).name)
         return render_template('index.html', fileInput=pathlib.Path(encrypted_file_path).name)
     elif file and encode_flag == "decode":
         filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-
+        file.save(filename)
+        print(file)
         decodeed_text = decode_file(file_path=filename, password=password)
+        @after_this_request
+        def remove_file(response):
+            try:
+                os.remove(filename)
+            except Exception as error:
+                app.logger.error(f"Error deleting file: {error}")
+            return response
 
         return render_template('message.html', decoded=decodeed_text)
 
@@ -65,6 +71,15 @@ def download_file(filename):
     print(encrypted_file_path)
     # Ensure the file exists before attempting to send it
     if os.path.exists(encrypted_file_path):
+
+        @after_this_request
+        def remove_file(response):
+            try:
+                os.remove(encrypted_file_path)
+            except Exception as error:
+                app.logger.error(f"Error deleting file: {error}")
+            return response
+
         return send_file(encrypted_file_path, as_attachment=True)
     else:
         print("doesnot exits")

@@ -1,3 +1,4 @@
+import os
 import pathlib
 from PIL import Image
 from creat_password import gen_shift
@@ -38,7 +39,6 @@ def hide_text_in_image(image_path, text_to_hide, output_path):
 
     # Convert text to binary
     binary_text = text_to_binary(text_to_hide)
-
     data_index = 0
 
     # Iterate through each pixel of the image
@@ -53,6 +53,7 @@ def hide_text_in_image(image_path, text_to_hide, output_path):
                 
                 if data_index < len(binary_text):
                     pixel[color_index] = (pixel[color_index] & ~1) | int(binary_text[data_index])
+                    print(f'{(pixel[color_index] & 1)} after')
                     data_index += 1
 
             # Update the pixel in the image
@@ -65,17 +66,17 @@ def hide_text_in_image(image_path, text_to_hide, output_path):
 def file_encoder(file_name: pathlib.Path, text_to_be_encrypted: str, password: str):
     text_to_encrypt = text_to_be_encrypted
     pasword_shift = gen_shift(password)
-
     encrypted_message = caesar_cipher(text_to_encrypt, pasword_shift)
-    hide_text_in_image(file_name, encrypted_message, output_path=file_name)
-
-    return file_name
+    hide_text_in_image(file_name, encrypted_message, (file_name.with_suffix('.png')))
+    if os.path.exists(file_name):
+        os.remove(file_name)
+    return file_name.with_suffix('.png')
 
 
 if __name__ == "__main__":
-    image_path = "downloads/Simple_light_bulb_graphic.jpg"
+    image_path = "downloads/asdf.jpg"
     image_path2 = "downloads/thumbnail.jpeg"
-    text_to_hide = "Hello, this is a hidden message! 00 25"
+    text_to_hide = "Jebac "
     hidden_text = caesar_cipher(text_to_hide, 10)
     output_path = "downloads/with_text.png"
-    file_encoder(pathlib.Path(image_path2), text_to_hide)
+    file_encoder(pathlib.Path(image_path), text_to_hide, password="pass")

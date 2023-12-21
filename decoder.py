@@ -13,7 +13,7 @@ def extract_text_from_image(image_path):
             for color_index in range(3):
                 # Extract the least significant bit from each color channel
                 binary_data += str(pixel[color_index] & 1)
-
+    print(binary_data[:200])
     # Convert binary data to text
     extracted_text = binary_to_text(binary_data)
 
@@ -25,7 +25,7 @@ def binary_to_text(binary_data):
     for i in range(0, len(binary_data), 8):
         byte = binary_data[i:i+8]
         if byte == '00000000':
-            break  # Stop decoding when encountering '00000000'
+           break  # Stop decoding when encountering '00000000'
         text += chr(int(byte, 2))
     return text
 
@@ -54,9 +54,9 @@ def decode_file(file_path, password):
 
 
 if __name__ == "__main__":
-    image_path = "./downloads/output.png"
-
-    extracted_text = extract_text_from_image(file_path)
-    tekst_to_display = caesar_cipher(extracted_text, -(gen_shift('tekst')))
+    image_path = "downloads/output.png"
+    file_path = "./downloads/pobrane.jpeg"
+    extracted_text = extract_text_from_image(image_path)
+    tekst_to_display = caesar_cipher(extracted_text, -(gen_shift('pass')))
     print("Extracted Text:", tekst_to_display)
 
