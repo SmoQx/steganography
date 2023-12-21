@@ -1,5 +1,3 @@
-
-
 def caesar_cipher(text, shift):
     result = ""
     for char in text:

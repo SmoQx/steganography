@@ -1,26 +1,7 @@
 import os
 import pathlib
 from PIL import Image
-from creat_password import gen_shift
-
-
-def caesar_cipher(text, shift):
-    result = ""
-    for char in text:
-        if char.isalpha():
-            # Encrypt uppercase letters
-            if char.isupper():
-                result += chr((ord(char) + shift - 65) % 26 + 65)
-            # Encrypt lowercase letters
-            else:
-                result += chr((ord(char) + shift - 97) % 26 + 97)
-        else:
-            result += char
-    return result
-
-
-def reversed_caesar(text, shift = 10):
-    return caesar_cipher(text, -shift)
+from creat_password import gen_shift, caesar_cipher
 
 
 def text_to_binary(text):
@@ -79,3 +60,4 @@ if __name__ == "__main__":
     hidden_text = caesar_cipher(text_to_hide, 10)
     output_path = "downloads/with_text.png"
     file_encoder(pathlib.Path(image_path), text_to_hide, password="pass")
+

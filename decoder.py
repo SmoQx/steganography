@@ -1,5 +1,5 @@
 from PIL import Image
-from creat_password import gen_shift
+from creat_password import gen_shift, caesar_cipher
 
 
 def extract_text_from_image(image_path):
@@ -27,21 +27,6 @@ def binary_to_text(binary_data):
            break  # Stop decoding when encountering '00000000'
         text += chr(int(byte, 2))
     return text
-
-
-def caesar_cipher(text, shift):
-    result = ""
-    for char in text:
-        if char.isalpha():
-            # Encrypt uppercase letters
-            if char.isupper():
-                result += chr((ord(char) + shift - 65) % 26 + 65)
-            # Encrypt lowercase letters
-            else:
-                result += chr((ord(char) + shift - 97) % 26 + 97)
-        else:
-            result += char
-    return result
 
 
 def decode_file(file_path, password):
