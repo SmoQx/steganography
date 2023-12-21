@@ -53,7 +53,6 @@ def hide_text_in_image(image_path, text_to_hide, output_path):
                 
                 if data_index < len(binary_text):
                     pixel[color_index] = (pixel[color_index] & ~1) | int(binary_text[data_index])
-                    print(f'{(pixel[color_index] & 1)} after')
                     data_index += 1
 
             # Update the pixel in the image

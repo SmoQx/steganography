@@ -13,7 +13,6 @@ def extract_text_from_image(image_path):
             for color_index in range(3):
                 # Extract the least significant bit from each color channel
                 binary_data += str(pixel[color_index] & 1)
-    print(binary_data[:200])
     # Convert binary data to text
     extracted_text = binary_to_text(binary_data)
 
@@ -48,7 +47,6 @@ def caesar_cipher(text, shift):
 def decode_file(file_path, password):
     extracted_text = extract_text_from_image(file_path)
     tekst_to_display = caesar_cipher(extracted_text, -(gen_shift(password)))
-    print("Extracted Text:", tekst_to_display)
 
     return tekst_to_display
 
