@@ -24,6 +24,16 @@
                 <label for="decode">Decode</label>
             </div>
 
+            <div>
+                <input type="radio" id="mail" name="mail-action" value="mail" />
+                <label for="mail">Mail</label>
+            </div>
+
+            <div>
+                <input type="radio" id="no_mail" name="mail-action" value="no_mail" checked />
+                <label for="no_mail">No Mail</label>
+            </div>
+
             <div class="row">
                 <label for="password">Passowrd:</label>
                 <input type="password" id="password" name="password"/>
@@ -63,6 +73,43 @@
             </a>
             {% endif %}
         </form>
+        <form action="{{ url_for('send_email') }}" method="post" enctype="multipart/form-data" name="mail_form" id="mail_form" class="default-hidden">
+            <fieldset>
+            <legend>Enter email:</legend>
+            <div class="row">
+                <label for="recipient_email">Recipient Email:</label>
+                <input id="recipient_email" type="email" name="recipient_email" required>
+            </div>
+            <div class="row">
+                <label for="subject">Subject:</label>
+                <input id="subject" type="text" name="subject" required>
+            </div>
+            <div class="row">
+                <label for="message_body">Message Body:</label>
+                <textarea id="message_body" name="message_body" rows="4" required></textarea>
+            </div>
+            <div class="row">
+                <label for="file_input">Attach File:</label>
+                <input id="file_input" type="file" name="file_input" accept=".png, .jpg, .jpeg, .gif">
+            </div>
+                <input type="submit" value="Send Email">
+            </fieldset>
+        </form>
+        <script>
+            function dropfile(file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    text_to_encrypt.value = e.target.result;
+                };
+                reader.readAsText(file, "UTF-8");
+            }
+
+            text_to_encrypt.ondrop = function(e) {
+                e.preventDefault();
+                var file = e.dataTransfer.files[0];
+                dropfile(file);
+            };
+        </script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 // Get references to the radio buttons and text input
@@ -71,6 +118,9 @@
                 const decode = document.getElementById('decode');
                 const textInput = document.getElementById('text_to_encrypt');
                 const text_block = document.getElementById('text_block');
+                const mail = document.getElementById('mail');
+                const no_mail = document.getElementById('no_mail');
+                const mail_form = document.getElementById('mail_form');
 
                 // Add an event listener to the radio buttons
                 encode.addEventListener('change', function () {
@@ -86,6 +136,20 @@
                     if (decode.checked) {
                         textInput.style.display = 'none';
                         text_block.style.display = 'none';
+                    }
+                });
+
+                mail.addEventListener('change', function () {
+                    // If "Show Input" is selected, show the text input
+                    if (mail.checked) {
+                        mail_form.style.display = 'flex';
+                    }
+                });
+
+                no_mail.addEventListener('change', function () {
+                    // If "Hide Input" is selected, hide the text input
+                    if (no_mail.checked) {
+                        mail_form.style.display = 'none';
                     }
                 });
             });

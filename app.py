@@ -1,6 +1,7 @@
 import pathlib
 from werkzeug.security import safe_join
 from flask import Flask, render_template, request, redirect, url_for, send_file, after_this_request
+from flask_mail import Mail, Message
 import os
 from encoder import file_encoder
 from decoder import decode_file
@@ -12,8 +13,16 @@ UPLOAD_FOLDER = 'downloads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['static_url_path'] = '/static'
 app.config['static_folder'] = 'static'
-app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-PASSWORD = 'your_password'  # Change this to your desired password
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'your_gmail_username@gmail.com'
+app.config['MAIL_PASSWORD'] = 'your_app_password'  # Use the App Password for security
+app.config['MAIL_DEFAULT_SENDER'] = 'your_gmail_username@gmail.com'
+
+mail = Mail(app)
 
 
 # Check if the file extension is allowed
@@ -84,6 +93,31 @@ def download_file(filename):
     else:
         print("doesnot exits")
         return render_template("uploaded.html")
+
+
+@app.route('/send_email', methods=['POST'])
+def send_email():
+    recipient_email = request.form.get('recipient_email')
+    subject = request.form.get('subject')
+    message_body = request.form.get('message_body')
+    attached_file = request.files['file_input']
+
+    if allowed_file(attached_file.filename):
+        temp_file_path = f'temp/{attached_file.filename}'
+        attached_file.save(temp_file_path)
+
+        msg = Message(subject, recipients=[recipient_email])
+        msg.body = message_body
+        with app.open_resource(temp_file_path) as fp:
+            msg.attach(attached_file.filename, 'application/octet-stream', fp.read())
+        mail.send(msg)
+
+        # Remove the temporary file
+        os.remove(temp_file_path)
+
+        return 'Email sent successfully!'
+    else:
+        return 'Invalid file type!'
 
 
 if __name__ == '__main__':

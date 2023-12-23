@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Sender</title>
+</head>
+<body>
+    <h1>Email Sender</h1>
+    <form action="{{ url_for('send_email') }}" method="post" enctype="multipart/form-data">
+        <input type="email" name="recipient_email" required><br>
+        <label for="recipient_email">Recipient Email:</label>
+
+        <input type="text" name="subject" required><br>
+        <label for="subject">Subject:</label>
+
+        <textarea name="message_body" rows="4" required></textarea><br>
+        <label for="message_body">Message Body:</label>
+
+        <input type="file" name="file_input" accept=".png, .jpg, .jpeg, .gif"><br>
+        <label for="file_input">Attach File:</label>
+
+        <input type="submit" value="Send Email">
+    </form>
+</body>
+</html>

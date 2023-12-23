@@ -48,6 +48,11 @@ fieldset, fieldset legend, input[type="text"], input[type="password"] {
   width: 200px;
 }
 
+.default-hidden {
+    display: none;
+    flex-direction: row;
+}
+
 legend {
     background-color: #4caf50;
     color: #000000;
