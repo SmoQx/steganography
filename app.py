@@ -1,3 +1,4 @@
+import json
 import pathlib
 from werkzeug.security import safe_join
 from flask import Flask, render_template, request, redirect, url_for, send_file, after_this_request
@@ -14,13 +15,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['static_url_path'] = '/static'
 app.config['static_folder'] = 'static'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'your_gmail_username@gmail.com'
-app.config['MAIL_PASSWORD'] = 'your_app_password'  # Use the App Password for security
-app.config['MAIL_DEFAULT_SENDER'] = 'your_gmail_username@gmail.com'
+
 
 mail = Mail(app)
 
@@ -28,6 +23,13 @@ mail = Mail(app)
 # Check if the file extension is allowed
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+
+def email_config():
+    with open('email.cfg', 'r') as read_config:
+        configuration = read_config.read()
+        print(json.decoder.JSONDecoder.decode(configuration))
+
 
 
 @app.route('/')
