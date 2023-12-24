@@ -15,9 +15,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['static_url_path'] = '/static'
 app.config['static_folder'] = 'static'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
-
-
-mail = Mail(app)
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USE_SSL"] = False
 
 
 # Check if the file extension is allowed
@@ -25,11 +26,21 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 
-def email_config():
+def email_config(app):
+
     with open('email.cfg', 'r') as read_config:
         configuration = read_config.read()
-        print(json.decoder.JSONDecoder.decode(configuration))
+        dict_conf = json.loads(configuration)
+        for x in dict_conf:
+            app.config[x] = str(dict_conf[x])
+        print(app.config)
 
+    mail = Mail(app)
+
+    return mail
+
+
+mail = email_config(app)
 
 
 @app.route('/')
@@ -124,4 +135,4 @@ def send_email():
 
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-    app.run(debug=False)
+    app.run(debug=True)
