@@ -10,7 +10,7 @@
 ## Contents ##
 1. [Details](#details)
 2. [Dependencies](#dependencies)
-3. [Documentation](/doc/doc.pdf)
+3. [How to use](#how_to_use)
 
 
 <a name="details"></a>
@@ -32,3 +32,6 @@ Used libraries
 3. flask
 4. os
 5. werkzeug
+
+
+<a name="how_to_use"></a>
