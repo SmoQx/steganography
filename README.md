@@ -19,6 +19,8 @@ The application supports most graphic file formats however, the encoded file is 
 The application utilizes the Caesar cipher as the algorithm for encrypting data.
 The encrypted data is saved in the least significant bit at the beginning of the image.
 To find the end of the text for decryption, a marker is used, in the form of a single byte composed of all zeros.
+After saving the file can be sent via email. 
+Email configuration is saved in email.cfg.
 
 
 <a name="dependencies"></a>
