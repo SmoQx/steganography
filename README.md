@@ -4,7 +4,7 @@
 
 
 ![](/screenshots/sc1.png)
-![](/screenshots/sc2_wiith_email.png)
+![](/screenshots/sc2_with_email.png)
 ![](/screenshots/sc3_after_encoding.png)
 
 ## Contents ##
