@@ -21,7 +21,7 @@ The encrypted data is saved in the least significant bit at the beginning of the
 To find the end of the text for decryption, a marker is used, in the form of a single byte composed of all zeros.  
 After saving the file can be sent via email.  
 Email configuration is saved in email.cfg.  
-Default server is set to gmail and the password to the plications must be creted in gmail's (https://myaccount.google.com/signinoptions/passkeys) 
+Default server is set to gmail. Password to the aplications must be creted in gmail's (https://myaccount.google.com/signinoptions/passkeys) 
 
 
 <a name="dependencies"></a>
