@@ -3,7 +3,9 @@
 </div>
 
 
-![](/screenshots/...)
+![](/screenshots/sc1.png)
+![](/screenshots/sc2_wiith_email.png)
+![](/screenshots/sc3_after_encoding.png)
 
 ## Contents ##
 1. [Details](#details)
