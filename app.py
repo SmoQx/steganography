@@ -33,7 +33,6 @@ def email_config(app):
         dict_conf = json.loads(configuration)
         for x in dict_conf:
             app.config[x] = str(dict_conf[x])
-        print(app.config)
 
     mail = Mail(app)
 
