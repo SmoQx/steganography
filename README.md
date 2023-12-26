@@ -40,7 +40,7 @@ Used libraries
 <h3>Encode</h3>
 
 If you want to insert text in to a photo u need to select a file from then you need to
-input a password with which the shift of a caesar cypher is generated. Then you can write in a text box 
+input a password with which the shift of a caesar cypher is generated. Then you can write or drag txt file in to text box 
 below text to encrypt. Encoding is done by changing the text to binary data and saved with a marker to the least significant bit of a pixel.
 After upload button is pressed the link to a file is generated and deleted from downloads folder.
 
