@@ -1,7 +1,7 @@
 import os
 import pathlib
 from PIL import Image
-from creat_password import gen_shift, caesar_cipher
+from creat_password import gen_shift, caesar_cipher, rsa_encrypt, rsa_decrypt
 
 
 def text_to_binary(text):
@@ -50,6 +50,13 @@ def file_encoder(file_name: pathlib.Path, text_to_be_encrypted: str, password: s
     hide_text_in_image(file_name, encrypted_message, (file_name.with_suffix('.png')))
     if os.path.exists(file_name):
         os.remove(file_name)
+    return file_name.with_suffix('.png')
+
+
+
+def file_encoder2(file_name: pathlib.Path, text_to_be_encrypted: str, password: str):
+    encrypted_message = rsa_encrypt(text_to_be_encrypted, password)
+    hide_text_in_image(file_name, encrypted_message, (file_name.with_suffix('.png')))
     return file_name.with_suffix('.png')
 
 

@@ -1,3 +1,8 @@
+from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
+import base64
+
+
 def caesar_cipher(text, shift):
     result = ""
     for char in text:
@@ -39,11 +44,43 @@ def gen_shift(password):
     return value
 
 
-if __name__ == '__main__':
-    pass_with_salt = ""
-    password = "Pa55"
+def string_to_binary(key: str):
+    return ''.join(format(ord(char), '08b') for char in key)
 
-    print(tekst := caesar_cipher(password, gen_shift(password)))
-    print(reversed_caesar(tekst, gen_shift(password)))
-    print(ord('\n'))
+
+def rsa_encrypt(text_to_encrypt: str, password: str) -> str:
+    with open('public.pem', 'r') as pub_key_file:
+        pub_key = pub_key_file.read()
+    cipher = PKCS1_OAEP.new(RSA.import_key(pub_key))
+    ciphertext = cipher.encrypt(text_to_encrypt.encode('utf-8'))
+    return base64.b64encode(ciphertext).decode('utf-8')
+
+
+def rsa_decrypt(text_to_encrypt: str, password: str) -> str:
+    with open('privat.pem', 'r') as priv_key_file:
+        priv_key = priv_key_file.read()
+    cipher = PKCS1_OAEP.new(RSA.import_key(priv_key))
+    plaintext = cipher.decrypt(base64.b64decode(text_to_encrypt))
+    return plaintext.decode('utf-8')
+
+
+if __name__ == '__main__':
+#    pass_with_salt = ""
+#    password = "Pa55"
+#
+#    print(tekst := caesar_cipher(password, gen_shift(password)))
+#    print(reversed_caesar(tekst, gen_shift(password)))
+#    print(ord('\n'))
+
+    with open('public.pem', 'r') as pub_key_file:
+        pub_key = pub_key_file.read()
+
+    encrypted_text = rsa_encrypt("asdfasdf", pub_key)
+    print(encrypted_text)
+
+    with open('privat.pem', 'r') as priv_key_file:
+        priv_key = priv_key_file.read()
+
+    decrypted_text = rsa_decrypt(encrypted_text, priv_key)
+    print(decrypted_text)
 

@@ -1,11 +1,12 @@
 import json
 import pathlib
+from time import sleep
 from werkzeug.security import safe_join
 from flask import Flask, render_template, request, redirect, url_for, send_file, after_this_request
 from flask_mail import Mail, Message
 import os
-from encoder import file_encoder
-from decoder import decode_file
+from encoder import file_encoder, file_encoder2
+from decoder import decode_file, decode_file2
 
 
 app = Flask(__name__)
@@ -66,14 +67,14 @@ def upload_file():
         file.save(filename)
         print(text_to_encrypt)
         # Encrypt the uploaded file
-        encrypted_file_path = file_encoder(pathlib.Path(filename), text_to_encrypt, password)
+        encrypted_file_path = file_encoder2(pathlib.Path(filename), text_to_encrypt, password)
         print(pathlib.Path(encrypted_file_path).name)
         return render_template('index.html', fileInput=pathlib.Path(encrypted_file_path).name)
     elif file and encode_flag == "decode":
         filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filename)
         print(file)
-        decodeed_text = decode_file(file_path=filename, password=password)
+        decodeed_text = decode_file2(file_path=filename, password=password)
         @after_this_request
         def remove_file(response):
             try:

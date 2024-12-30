@@ -1,5 +1,5 @@
 from PIL import Image
-from creat_password import gen_shift, caesar_cipher
+from creat_password import gen_shift, caesar_cipher, rsa_decrypt
 
 
 def extract_text_from_image(image_path):
@@ -32,6 +32,13 @@ def binary_to_text(binary_data):
 def decode_file(file_path, password):
     extracted_text = extract_text_from_image(file_path)
     tekst_to_display = caesar_cipher(extracted_text, -(gen_shift(password)))
+
+    return tekst_to_display
+
+
+def decode_file2(file_path: str, password: str) -> str:
+    extracted_text = extract_text_from_image(file_path)
+    tekst_to_display = rsa_decrypt(extracted_text, password)
 
     return tekst_to_display
 
