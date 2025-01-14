@@ -1,3 +1,4 @@
+from turtle import st
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
 import base64
@@ -51,7 +52,9 @@ def string_to_binary(key: str):
 def rsa_encrypt(text_to_encrypt: str, password: str) -> str:
     with open('public.pem', 'r') as pub_key_file:
         pub_key = pub_key_file.read()
-    cipher = PKCS1_OAEP.new(RSA.import_key(pub_key))
+    print(password)
+    print(format_pem_public(password))
+    cipher = PKCS1_OAEP.new(RSA.import_key(format_pem_public(password).encode()))
     ciphertext = cipher.encrypt(text_to_encrypt.encode('utf-8'))
     return base64.b64encode(ciphertext).decode('utf-8')
 
@@ -59,9 +62,21 @@ def rsa_encrypt(text_to_encrypt: str, password: str) -> str:
 def rsa_decrypt(text_to_encrypt: str, password: str) -> str:
     with open('privat.pem', 'r') as priv_key_file:
         priv_key = priv_key_file.read()
-    cipher = PKCS1_OAEP.new(RSA.import_key(priv_key))
+    print(password)
+    print(format_pem_priv(password))
+    cipher = PKCS1_OAEP.new(RSA.import_key(format_pem_priv(password).encode()))
     plaintext = cipher.decrypt(base64.b64decode(text_to_encrypt))
     return plaintext.decode('utf-8')
+
+
+def format_pem_public(pem_key: str) -> str:
+    lines = [pem_key[i:i+64] for i in range(0, len(pem_key), 64)]
+    return "-----BEGIN PUBLIC KEY-----\n" + "\n".join(lines) + "\n-----END PUBLIC KEY-----"
+
+
+def format_pem_priv(pem_key: str) -> str:
+    lines = [pem_key[i:i+64] for i in range(0, len(pem_key), 64)]
+    return "-----BEGIN RSA PRIVATE KEY-----\n" + "\n".join(lines) + "\n-----END RSA PRIVATE KEY-----"
 
 
 if __name__ == '__main__':
@@ -72,15 +87,15 @@ if __name__ == '__main__':
 #    print(reversed_caesar(tekst, gen_shift(password)))
 #    print(ord('\n'))
 
-    with open('public.pem', 'r') as pub_key_file:
+    with open('str.pem', 'r') as pub_key_file:
         pub_key = pub_key_file.read()
 
-    encrypted_text = rsa_encrypt("asdfasdf", pub_key)
+    encrypted_text = rsa_encrypt("asdfasdf", format_pem_public(pub_key))
     print(encrypted_text)
 
-    with open('privat.pem', 'r') as priv_key_file:
+    with open('str2.pem', 'r') as priv_key_file:
         priv_key = priv_key_file.read()
 
-    decrypted_text = rsa_decrypt(encrypted_text, priv_key)
+    decrypted_text = rsa_decrypt(encrypted_text, format_pem_priv(priv_key))
     print(decrypted_text)
 

@@ -67,7 +67,11 @@ def upload_file():
         file.save(filename)
         print(text_to_encrypt)
         # Encrypt the uploaded file
-        encrypted_file_path = file_encoder2(pathlib.Path(filename), text_to_encrypt, password)
+        try:
+            encrypted_file_path = file_encoder2(pathlib.Path(filename), text_to_encrypt, password)
+        except Exception as e:
+            print("wrong password")
+            return render_template('index.html')
         print(pathlib.Path(encrypted_file_path).name)
         return render_template('index.html', fileInput=pathlib.Path(encrypted_file_path).name)
     elif file and encode_flag == "decode":
