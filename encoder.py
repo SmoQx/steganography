@@ -63,7 +63,7 @@ def file_encoder2(file_name: pathlib.Path, text_to_be_encrypted: str, password: 
 if __name__ == "__main__":
     image_path = "downloads/asdf.jpg"
     image_path2 = "downloads/thumbnail.jpeg"
-    text_to_hide = "Jebac "
+    text_to_hide = "asdf"
     hidden_text = caesar_cipher(text_to_hide, 10)
     output_path = "downloads/with_text.png"
     file_encoder(pathlib.Path(image_path), text_to_hide, password="pass")

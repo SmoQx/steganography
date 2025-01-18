@@ -1,4 +1,3 @@
-from turtle import st
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
 import base64
@@ -50,20 +49,12 @@ def string_to_binary(key: str):
 
 
 def rsa_encrypt(text_to_encrypt: str, password: str) -> str:
-    with open('public.pem', 'r') as pub_key_file:
-        pub_key = pub_key_file.read()
-    print(password)
-    print(format_pem_public(password))
     cipher = PKCS1_OAEP.new(RSA.import_key(format_pem_public(password).encode()))
     ciphertext = cipher.encrypt(text_to_encrypt.encode('utf-8'))
     return base64.b64encode(ciphertext).decode('utf-8')
 
 
 def rsa_decrypt(text_to_encrypt: str, password: str) -> str:
-    with open('privat.pem', 'r') as priv_key_file:
-        priv_key = priv_key_file.read()
-    print(password)
-    print(format_pem_priv(password))
     cipher = PKCS1_OAEP.new(RSA.import_key(format_pem_priv(password).encode()))
     plaintext = cipher.decrypt(base64.b64decode(text_to_encrypt))
     return plaintext.decode('utf-8')

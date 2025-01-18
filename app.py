@@ -1,6 +1,5 @@
 import json
 import pathlib
-from time import sleep
 from werkzeug.security import safe_join
 from flask import Flask, render_template, request, redirect, url_for, send_file, after_this_request
 from flask_mail import Mail, Message
@@ -70,7 +69,6 @@ def upload_file():
         try:
             encrypted_file_path = file_encoder2(pathlib.Path(filename), text_to_encrypt, password)
         except Exception as e:
-            print("wrong password")
             return render_template('index.html')
         print(pathlib.Path(encrypted_file_path).name)
         return render_template('index.html', fileInput=pathlib.Path(encrypted_file_path).name)
